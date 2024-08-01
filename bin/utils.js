@@ -18,23 +18,22 @@ const getParseContent = (path) => {
 };
 
 const getDiff = (file1, file2) => {
-  const diffFiles = {};
   const keyOneFile = Object.keys(file1);
   const keyTwoFile = Object.keys(file2);
   const keys = _.union(keyOneFile, keyTwoFile);
-  for (const key of keys.sort()) {
+  return keys.reduce((acc, key) => {
     if (!isKeyinObject(file1, key)) {
-      diffFiles[`+ ${key}`] = file2[key];
+      acc[`+ ${key}`] = file2[key];
     } else if (!isKeyinObject(file2, key)) {
-      diffFiles[`- ${key}`] = file1[key];
+      acc[`- ${key}`] = file1[key];
     } else if (file1[key] !== file2[key]) {
-      diffFiles[`- ${key}`] = file1[key];
-      diffFiles[`+ ${key}`] = file2[key];
+      acc[`- ${key}`] = file1[key];
+      acc[`+ ${key}`] = file2[key];
     } else {
-      diffFiles[`  ${key}`] = file2[key];
+      acc[`  ${key}`] = file2[key];
     }
-  }
-  return diffFiles;
+    return acc;
+  }, {});
 };
 
 export default (path1, path2) => {
