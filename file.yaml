@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<yml_catalog date="2022-01-01 17:22">
+  <shop>
+    <categories>
+      <category id="1278">Электроника</category>
+      <category id="1293" parentId="1278">Смартфоны</category>
+      <category id="1345" parentId="1278">Телефоны</category>
+      <category id="3761" parentId="1278">Телевизоры</category>
+      <category id="1553" parentId="3761">Медиа-плееры</category>
+      <category id="3798">Бытовая техника</category>     
+    </categories>
+    <offers>
+      <offer id="1637" available="true">
+        <url>http://example.com/product/id1637</url>
+        <price>226.50</price>
+        <oldprice>250</oldprice>
+        <categoryId>1293</categoryId>
+        <categoryId>1345</categoryId>
+        <picture>http://example.com/images/1637_1.jpg</picture>
+        <name>Товар 1</name>
+        <typePrefix>Тип изделия</typePrefix>
+        <param name="Диагональ">6</param>
+        <description>Описание товара 1637</description>
+        <vendor>Название производителя</vendor>
+      </offer>
+      <offer id="1638" available="false">
+        <url>http://example.com/product/id1638</url>
+        <price>545.30</price>
+        <categoryId>1293</categoryId>
+        <categoryId>1345</categoryId>
+        <picture>http://example.com/images/1638_1.jpg</picture>
+        <name>Товар 2</name>
+        <typePrefix>Тип изделия</typePrefix>
+        <param name="Цвет">Белый</param>
+        <description>Описание товара 1638</description>
+        <vendor>Название производителя</vendor>
+      </offer>
+    </offers>
+  </shop>
+</yml_catalog>
