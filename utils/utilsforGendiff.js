@@ -12,7 +12,11 @@ const isKeyinObject = (object, key) => Object.hasOwn(object, key);
 const getParseContent = (path) => {
   switch (getExtension(path)) {
     case 'json':
-      return isFullPath(path) ? doParseJson(fs.readFileSync(path, 'utf8')) : doParseJson(fs.readFileSync(getPath(path), 'utf8'));
+      if (isFullPath(path)) {
+        return doParseJson(fs.readFileSync(path, 'utf8'));
+      }
+      return doParseJson(fs.readFileSync(getPath(path.split('/').pop(), 'utf8')));
+
     default: throw new Error('extension don\'t provide');
   }
 };
