@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 const getPath = (filename) => resolve(cwd(), filename);
 const doParseJson = (file) => JSON.parse(file);
-const isFullPath = (path) => path[0] === '/';
+const isFullPath = (path) => path.includes('/');
 const getExtension = (path) => path.split('.').pop();
 const isKeyinObject = (object, key) => Object.hasOwn(object, key);
 
@@ -13,9 +13,9 @@ const getParseContent = (path) => {
   switch (getExtension(path)) {
     case 'json':
       if (isFullPath(path)) {
-        return doParseJson(fs.readFileSync(path, 'utf8'));
+        return doParseJson(fs.readFileSync(path.split('/').pop(), 'utf8'));
       }
-      return doParseJson(fs.readFileSync(getPath(path.split('/').pop(), 'utf8')));
+      return doParseJson(fs.readFileSync(getPath(path, 'utf8')));
 
     default: throw new Error('extension don\'t provide');
   }
