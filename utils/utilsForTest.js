@@ -8,6 +8,7 @@ const __dirname = dirname(__filename);
 export default (condition) => {
   switch (condition) {
     case 'json-json':
+      console.log(join(__dirname, '..', '__fixtures__', 'twoJson.json'), 'utf8');
       return doParseJson(fs.readFileSync(join(__dirname, '..', '__fixtures__', 'twoJson.json'), 'utf8'));
     default:
       throw new Error('extension do\'nt included');
