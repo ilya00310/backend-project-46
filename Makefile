@@ -3,3 +3,5 @@ lint:
  
 tests:
 	npm run test
+report:
+	./gradlew jacocoTestReport
