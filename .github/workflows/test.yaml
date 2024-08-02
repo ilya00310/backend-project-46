@@ -14,4 +14,4 @@ jobs:
       - run: make lint
 
       - name: run test
-        run: npm test
+        run: make tests

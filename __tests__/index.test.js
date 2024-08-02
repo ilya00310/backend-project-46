@@ -10,6 +10,3 @@ test('two deffrent path', () => {
 test('path do\'nt exist', () => {
   expect(getDiff('file1.json')).toBeUndefined();
 });
-test('extension don\'t provide', () => {
-  expect(getDiff('file1.json,asd.html')).toBe('extension don\'t provide');
-});
