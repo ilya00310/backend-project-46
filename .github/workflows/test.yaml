@@ -1,0 +1,17 @@
+name: test-and-lint
+
+on: push
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+
+      - run: npm install
+
+      - run: npm run lint
+
+      - name: run test
+        run: npm test

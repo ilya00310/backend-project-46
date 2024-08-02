@@ -13,7 +13,7 @@ const getParseContent = (path) => {
   switch (getExtension(path)) {
     case 'json':
       return isFullPath(path) ? doParseJson(fs.readFileSync(path, 'utf8')) : doParseJson(fs.readFileSync(getPath(path), 'utf8'));
-    default:
+    default: throw new Error('extension don\'t provide');
   }
 };
 
@@ -37,7 +37,14 @@ const getDiff = (file1, file2) => {
 };
 
 export default (path1, path2) => {
+  if (path1 === undefined || path2 === undefined) {
+    return undefined;
+  }
   const contentFileOne = getParseContent(path1);
   const contentFileTwo = getParseContent(path2);
   return getDiff(contentFileOne, contentFileTwo);
+};
+
+export {
+  doParseJson,
 };
