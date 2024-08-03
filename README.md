@@ -1,6 +1,6 @@
 ### Hexlet tests and linter status:
 
-[![Actions Status](https://github.com/ilya00310/backend-project-44/actions/workflows/test-and-lint.yml/badge.svg)](https://github.com/ilya00310/backend-project-44/actions)
+[![Actions Status](https://github.com/ilya00310/backend-project-46/actions/workflows/test-and-lint.yml/badge.svg)](https://github.com/ilya00310/backend-project-44/actions)
 
 ![example workflow](https://github.com/ilya00310/backend-project-46/actions/workflows/test/badge.svg)
 
