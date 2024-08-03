@@ -12,14 +12,16 @@
 ## asciinema
 
 ```
-json-json
+json-json:
     https://asciinema.org/a/EYSU1ZC5OW4Oohjdxv60yjZox
 ```
 
-```json-yaml
+```
+json-yaml:
     https://asciinema.org/a/LvsuXHjQ5Cl6XUBKeZrXFAYKy
 ```
 
-```json-yaml
+```
+json-yaml:
      https://asciinema.org/a/4hIqZQQyoArhjH2qlIqcLRypA
 ```

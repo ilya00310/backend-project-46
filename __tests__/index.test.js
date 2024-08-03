@@ -1,4 +1,4 @@
-import getDiff from '../bin/utils.js';
+import getDiff from '../bin/parser.js';
 import getAnswer from '../__fixtures__/getAnswer.js';
 
 describe('only json', () => {

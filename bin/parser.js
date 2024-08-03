@@ -12,7 +12,7 @@ const getParseContent = (path) => {
         return doParseJson(fs.readFileSync(path.split('/').pop(), 'utf8'));
       }
       return doParseJson(fs.readFileSync(getPath(path, 'utf8')));
-    case 'yaml':
+    case 'yaml' || 'yml':
       if (isFullPath(path)) {
         return load(fs.readFileSync(path.split('/').pop(), 'utf8'));
       }
