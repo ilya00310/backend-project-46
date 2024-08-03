@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { cwd } from 'node:process';
 
-const getPath = (filename) => resolve(cwd(), filename);
+const getPath = (filename) => resolve(cwd(), '__fixtures__', filename);
 const doParseJson = (file) => JSON.parse(file);
 const isFullPath = (path) => path.includes('/');
 const getExtension = (path) => path.split('.').pop();
