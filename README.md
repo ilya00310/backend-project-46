@@ -1,6 +1,5 @@
 ### Hexlet tests and linter status:
 
-[![Java CI](https://github.com/ilya00310/backend-project-46/actions/workflows/main.yaml/badge.svg)](https://github.com/ilya00310/backend-project-46/actions/workflows/main.yaml)
 [![test-and-lint](https://github.com/ilya00310/backend-project-46/actions/workflows/test.yaml/badge.svg)](https://github.com/ilya00310/backend-project-46/actions/workflows/test.yaml)
 
 ## Run Code Climate
