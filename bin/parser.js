@@ -25,22 +25,23 @@ const getParseContent = (path) => {
 const getDiff = (file1, file2) => {
   const keyOneFile = Object.keys(file1);
   const keyTwoFile = Object.keys(file2);
-  const keys = _.union(keyOneFile, keyTwoFile).sort();
-  const obj = keys.reduce((acc, key) => {
+  const sortKeys = _.sortBy(_.union(keyOneFile, keyTwoFile));
+  return sortKeys.reduce((acc, key, currentIndex) => {
+    let diiffInStr = '';
     if (!isKeyinObject(file1, key)) {
-      acc[`+ ${key}`] = file2[key];
+      diiffInStr = `+ ${key}: ${file2[key]}\n`;
     } else if (!isKeyinObject(file2, key)) {
-      acc[`- ${key}`] = file1[key];
+      diiffInStr = `- ${key}: ${file1[key]}\n`;
     } else if (file1[key] !== file2[key]) {
-      acc[`- ${key}`] = file1[key];
-      acc[`+ ${key}`] = file2[key];
+      diiffInStr = `- ${key}: ${file1[key]}\n+ ${key}: ${file2[key]}\n`;
     } else {
-      acc[`  ${key}`] = file2[key];
+      diiffInStr = `  ${key} : ${file2[key]}\n`;
     }
-    return acc;
-  }, {});
-  console.log(typeof (JSON.stringify(obj)));
-  return JSON.stringify(obj);
+    if (currentIndex === sortKeys.length - 1) {
+      return `${acc + diiffInStr}}`;
+    }
+    return acc + diiffInStr;
+  }, '{\n');
 };
 
 export default (path1, path2) => {
