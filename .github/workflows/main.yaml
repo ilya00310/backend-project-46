@@ -1,4 +1,4 @@
-name: Java CI
+name: JS CI
 
 on:
   - push
@@ -23,7 +23,6 @@ jobs:
         uses: paambaati/codeclimate-action@v5.0.0
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
-          JACOCO_SOURCE_PATH: app/src/main/java
         with:
-          coverageCommand: make report
+          coverageCommand: yarn coverage
           coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
