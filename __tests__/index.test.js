@@ -1,7 +1,5 @@
 import getDiff from '../bin/parser.js';
-import getAnswer from '../__fixtures__/getAnswer.js';
 import answer from '../__fixtures__/answer.js';
-
 
 describe('only json', () => {
   test('two short path', () => {
