@@ -26,7 +26,7 @@ const getDiff = (file1, file2) => {
   const keyOneFile = Object.keys(file1);
   const keyTwoFile = Object.keys(file2);
   const keys = _.union(keyOneFile, keyTwoFile).sort();
-  return keys.reduce((acc, key) => {
+  const obj = keys.reduce((acc, key) => {
     if (!isKeyinObject(file1, key)) {
       acc[`+ ${key}`] = file2[key];
     } else if (!isKeyinObject(file2, key)) {
@@ -39,6 +39,8 @@ const getDiff = (file1, file2) => {
     }
     return acc;
   }, {});
+  console.log(typeof (JSON.stringify(obj)));
+  return JSON.stringify(obj);
 };
 
 export default (path1, path2) => {

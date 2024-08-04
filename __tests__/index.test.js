@@ -8,7 +8,7 @@ describe('only json', () => {
   test('two deffrent path', () => {
     expect(getDiff('file1.json', '/home/ilya/backend-project-46/file2.json')).toEqual(getAnswer());
   });
-  test('path do\'nt exist', () => {
+  test('path don\'t exist', () => {
     expect(getDiff('file1.json')).toBeUndefined();
   });
 });
