@@ -23,3 +23,6 @@ publish:
 	npm publish
 
 .PHONY: test
+
+tests:
+	npm run test
