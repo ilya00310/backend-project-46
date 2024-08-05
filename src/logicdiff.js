@@ -16,7 +16,7 @@ const getDiffHowObg = (sortKeys, file1, file2) => sortKeys.reduce((acc, key) => 
 
 const converObjInStr = (obj, file1, file2) => {
   const entries = Object.entries(obj);
-  const strDiff = entries.reduce((acc, [key, value], currentIndex) => {
+  const strDiff = entries.reduce((acc, [key, value]) => {
     let interimStr = '';
     switch (value) {
       case 'added':
