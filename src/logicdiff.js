@@ -19,14 +19,10 @@ const getDiffHowObg = (sortKeys, file1, file2) => sortKeys.reduce((acc, key) => 
   return { ...acc, ...interimObj };
 }, {});
 
-const convertObjInStr = (item) => {
-  const subStringify = (value, subSpacesCount = 1) => {
+const convertObjInStr = (item, spacesCount = 4) => {
+  const subStringify = (value, subSpacesCount, depth = 1) => {
+    let pointerDeep = 0;
     let newCount = subSpacesCount;
-    let buffer = 0;
-    if (typeof (value) !== 'object' || value === null) {
-      // console.log(value.value)
-      return value;
-    }
     if (typeof (value) !== 'object' || value === null) {
       // console.log(value.value)
       return value;
@@ -40,48 +36,41 @@ const convertObjInStr = (item) => {
       if (currentIndex === 0) {
         interimStr += `${' '.repeat(0)}{\n`;
       }
-      if ((typeof (currentValue.value) === 'object' && currentValue.value !== null) || (typeof (currentValue) === 'object' && value !== null)) {
-        newCount = subSpacesCount + 1;
-        buffer = newCount;
+
+      if (((typeof (currentValue) === 'object' && !currentValue.status) || typeof (currentValue.value) === 'object')) {
+        pointerDeep = 1;
+        newCount += spacesCount;
       }
-      if ((typeof (currentValue.value) === 'object' && currentValue.value !== null)) {
-        newCount += 3;
-      }
+      const indent = spacesCount * depth - 2;
       switch (currentValue.status) {
         case 'added':
-          interimStr += `${' '.repeat(buffer)}+ ${key}: ${subStringify(currentValue.value, newCount)}\n`;
+          interimStr += `${' '.repeat(indent)}+ ${key}: ${subStringify(currentValue.value, newCount, depth + pointerDeep)}\n`;
           break;
         case 'deleted':
-          interimStr += `${' '.repeat(buffer)}- ${key}: ${subStringify(currentValue.value, newCount)}\n`;
+          interimStr += `${' '.repeat(indent)}- ${key}: ${subStringify(currentValue.value, newCount, depth + pointerDeep)}\n`;
           break;
         case 'changed':
-          interimStr += `${' '.repeat(buffer)}- ${key}: ${subStringify(currentValue.value, newCount)}\n`;
-          interimStr += `${' '.repeat(buffer)}+ ${key}: ${subStringify(currentValue.newValue, newCount)}\n`;
+          interimStr += `${' '.repeat(indent)}- ${key}: ${subStringify(currentValue.value, newCount, depth + pointerDeep)}\n`;
+          interimStr += `${' '.repeat(indent)}+ ${key}: ${subStringify(currentValue.newValue, newCount, depth + pointerDeep)}\n`;
           break;
         case 'unchanged':
-          interimStr += `${' '.repeat(buffer + 1)} ${key}: ${subStringify(currentValue.value, newCount)}\n`;
+          interimStr += `${' '.repeat(indent + 1)} ${key}: ${subStringify(currentValue.value, newCount, depth + pointerDeep)}\n`;
           break;
         default:
-          console.log(key, currentValue);
-          if (typeof (currentValue) === 'object') {
-            interimStr += `${' '.repeat(buffer + 1)} ${key}: ${subStringify(currentValue, newCount + 3)}\n`;
-          } else {
-            interimStr += `${' '.repeat(buffer)} ${key}: ${subStringify(currentValue, newCount + 3)}\n`;
-          }
+          interimStr += `${' '.repeat(indent + 1)} ${key}: ${subStringify(currentValue, newCount, depth + pointerDeep)}\n`;
       }
       if ((currentIndex === lastIndex && typeof (currentValue) === 'object') || currentIndex === lastIndex) {
-        interimStr += `${' '.repeat(subSpacesCount - 1)}}`;
+        interimStr += `${' '.repeat(indent - 2)}}`;
       }
-      // console.log('acc', acc)
       return acc + interimStr;
     }, '');
   };
-  return subStringify(item);
+  return subStringify(item, spacesCount);
 };
 
 export default (keys, file1, file2) => {
   const objDiff = getDiffHowObg(keys, file1, file2);
   console.log(objDiff);
-  const strDiff = convertObjInStr(objDiff, file1, file2);
+  const strDiff = convertObjInStr(objDiff);
   return strDiff;
 };
