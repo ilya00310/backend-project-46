@@ -1,46 +1,87 @@
-import { isKeyinObject } from './utils.js';
+import { isKeyinObject, getSortKeys } from './utils.js';
 
 const getDiffHowObg = (sortKeys, file1, file2) => sortKeys.reduce((acc, key) => {
   const interimObj = {};
+
   if (!isKeyinObject(file1, key)) {
-    interimObj[key] = 'added';
+    interimObj[key] = { status: 'added', value: file2[key] };
   } else if (!isKeyinObject(file2, key)) {
-    interimObj[key] = 'deleted';
+    interimObj[key] = { status: 'deleted', value: file1[key] };
   } else if (file1[key] !== file2[key]) {
-    interimObj[key] = 'changed';
-  } else {
-    interimObj[key] = 'unchanged';
+    interimObj[key] = { status: 'changed', value: file1[key], newValue: file2[key] };
+  } else if (isKeyinObject(file1, key) && isKeyinObject(file2, key)) {
+    interimObj[key] = { status: 'unchanged', value: file1[key] };
   }
+  if (typeof (file1[key]) === 'object' && typeof (file2[key]) === 'object') {
+    interimObj[key] = getDiffHowObg(getSortKeys(file1, file2, key), file1[key], file2[key]);
+  }
+
   return { ...acc, ...interimObj };
 }, {});
 
-const converObjInStr = (obj, file1, file2) => {
-  const entries = Object.entries(obj);
-  const strDiff = entries.reduce((acc, [key, value]) => {
-    let interimStr = '';
-    switch (value) {
-      case 'added':
-        interimStr = `+ ${key}: ${file2[key]}\n`;
-        break;
-      case 'deleted':
-        interimStr = `- ${key}: ${file1[key]}\n`;
-        break;
-      case 'changed':
-        interimStr = `- ${key}: ${file1[key]}\n+ ${key}: ${file2[key]}\n`;
-        break;
-      case 'unchanged':
-        interimStr = `  ${key} : ${file2[key]}\n`;
-        break;
-      default: throw new Error();
+const convertObjInStr = (item) => {
+  const subStringify = (value, subSpacesCount = 1) => {
+    let newCount = subSpacesCount;
+    let buffer = 0;
+    if (typeof (value) !== 'object' || value === null) {
+      // console.log(value.value)
+      return value;
     }
-    return acc + interimStr;
-  }, '{\n');
-  return `${strDiff}}`;
+    if (typeof (value) !== 'object' || value === null) {
+      // console.log(value.value)
+      return value;
+    }
+
+    // console.log(value)
+    const entries = Object.entries(value);
+    const lastIndex = entries.length - 1;
+    return entries.reduce((acc, [key, currentValue], currentIndex) => {
+      let interimStr = '';
+      if (currentIndex === 0) {
+        interimStr += `${' '.repeat(0)}{\n`;
+      }
+      if ((typeof (currentValue.value) === 'object' && currentValue.value !== null) || (typeof (currentValue) === 'object' && value !== null)) {
+        newCount = subSpacesCount + 1;
+        buffer = newCount;
+      }
+      if ((typeof (currentValue.value) === 'object' && currentValue.value !== null)) {
+        newCount += 3;
+      }
+      switch (currentValue.status) {
+        case 'added':
+          interimStr += `${' '.repeat(buffer)}+ ${key}: ${subStringify(currentValue.value, newCount)}\n`;
+          break;
+        case 'deleted':
+          interimStr += `${' '.repeat(buffer)}- ${key}: ${subStringify(currentValue.value, newCount)}\n`;
+          break;
+        case 'changed':
+          interimStr += `${' '.repeat(buffer)}- ${key}: ${subStringify(currentValue.value, newCount)}\n`;
+          interimStr += `${' '.repeat(buffer)}+ ${key}: ${subStringify(currentValue.newValue, newCount)}\n`;
+          break;
+        case 'unchanged':
+          interimStr += `${' '.repeat(buffer + 1)} ${key}: ${subStringify(currentValue.value, newCount)}\n`;
+          break;
+        default:
+          console.log(key, currentValue);
+          if (typeof (currentValue) === 'object') {
+            interimStr += `${' '.repeat(buffer + 1)} ${key}: ${subStringify(currentValue, newCount + 3)}\n`;
+          } else {
+            interimStr += `${' '.repeat(buffer)} ${key}: ${subStringify(currentValue, newCount + 3)}\n`;
+          }
+      }
+      if ((currentIndex === lastIndex && typeof (currentValue) === 'object') || currentIndex === lastIndex) {
+        interimStr += `${' '.repeat(subSpacesCount - 1)}}`;
+      }
+      // console.log('acc', acc)
+      return acc + interimStr;
+    }, '');
+  };
+  return subStringify(item);
 };
 
 export default (keys, file1, file2) => {
   const objDiff = getDiffHowObg(keys, file1, file2);
   console.log(objDiff);
-  const strDiff = converObjInStr(objDiff, file1, file2);
+  const strDiff = convertObjInStr(objDiff, file1, file2);
   return strDiff;
 };

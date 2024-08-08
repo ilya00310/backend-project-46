@@ -1,3 +1,3 @@
-import getDiff from './bin/utils.js';
+import getDiff from './src/utils.js';
 
 export default getDiff;
