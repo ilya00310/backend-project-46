@@ -1,3 +1,3 @@
-import getDiff from './src/utils.js';
+import { stylish } from './src/logicdiff.js';
 
-export default getDiff;
+export default stylish;

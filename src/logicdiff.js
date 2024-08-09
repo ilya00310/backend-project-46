@@ -1,6 +1,6 @@
 import { isKeyinObject, getSortKeys } from './utils.js';
 
-const getDiffHowObg = (sortKeys, file1, file2) => sortKeys.reduce((acc, key) => {
+export const getStatusDiff = (sortKeys, file1, file2) => sortKeys.reduce((acc, key) => {
   const interimObj = {};
 
   if (!isKeyinObject(file1, key)) {
@@ -13,13 +13,13 @@ const getDiffHowObg = (sortKeys, file1, file2) => sortKeys.reduce((acc, key) => 
     interimObj[key] = { status: 'unchanged', value: file1[key] };
   }
   if (typeof (file1[key]) === 'object' && typeof (file2[key]) === 'object') {
-    interimObj[key] = getDiffHowObg(getSortKeys(file1, file2, key), file1[key], file2[key]);
+    interimObj[key] = getStatusDiff(getSortKeys(file1, file2, key), file1[key], file2[key]);
   }
 
   return { ...acc, ...interimObj };
 }, {});
 
-const convertObjInStr = (item, spacesCount = 4) => {
+export const stylish = (item, spacesCount = 4) => {
   const subStringify = (value, subSpacesCount, depth = 1) => {
     let pointerDeep = 0;
     let newCount = subSpacesCount;
@@ -66,11 +66,4 @@ const convertObjInStr = (item, spacesCount = 4) => {
     }, '');
   };
   return subStringify(item, spacesCount);
-};
-
-export default (keys, file1, file2) => {
-  const objDiff = getDiffHowObg(keys, file1, file2);
-  console.log(objDiff);
-  const strDiff = convertObjInStr(objDiff);
-  return strDiff;
 };
