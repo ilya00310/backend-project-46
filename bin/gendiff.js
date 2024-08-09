@@ -11,7 +11,7 @@ program
   .version('0.0.1')
   .argument('<filepath1>')
   .argument('<filepath2>')
-  .option('-f, --format <type>', 'output format', 'stylish')
+  .option('-f, --format <type>', 'output format', stylish)
   .action((filepath1, filepath2, options) => {
     const diffStatus = getParseAndStatus(filepath1, filepath2);
     const format = options.format === 'stylish' ? stylish : options.format;
