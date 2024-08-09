@@ -26,3 +26,5 @@ publish:
 
 tests:
 	npm run test
+make publish:
+	npm publish --dry-run

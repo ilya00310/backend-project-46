@@ -11,15 +11,21 @@
 
 ```
 json-json:
-    https://asciinema.org/a/EYSU1ZC5OW4Oohjdxv60yjZox
+    https://asciinema.org/a/HoSqjuw7Yfjsl0wJ9meubb4nf
 ```
 
 ```
 json-yaml:
-    https://asciinema.org/a/LvsuXHjQ5Cl6XUBKeZrXFAYKy
+    https://asciinema.org/a/rgNQu1nanJKWTZEi39mse3G1W
 ```
 
 ```
-json-yaml:
-     https://asciinema.org/a/4hIqZQQyoArhjH2qlIqcLRypA
+yaml-yaml:
+     https://asciinema.org/a/ydAvUtcvNM12jH2QHRmDS2mhT
+```
+
+```
+Package work:
+
+https://asciinema.org/a/zC5tKp98pXu5415rA8Hry2kW1
 ```
