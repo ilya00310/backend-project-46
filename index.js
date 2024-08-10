@@ -1,3 +1,3 @@
-import { stylish } from './src/logicdiff.js';
+import stylish from './formatters/depth.js';
 
 export default stylish;

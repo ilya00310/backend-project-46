@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { getStatusDiff } from '../src/logicdiff.js';
+import getStatusDiff from '../src/logicdiff.js';
 
 export default (file1, file2) => {
   const keyOneFile = Object.keys(file1);
