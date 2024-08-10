@@ -5,6 +5,7 @@ import stylish from '../formatters/depth.js';
 import plain from '../formatters/plain.js';
 
 const program = new Command();
+const getDiff = (status, foramt) => `${foramt(status)}`;
 
 program
   .name('gendiff')
@@ -15,7 +16,17 @@ program
   .option('-f, --format <type>', 'output format', 'stylish')
   .action((filepath1, filepath2, options) => {
     const diffStatus = getParseAndStatus(filepath1, filepath2);
-    const format = options.format === 'stylish' ? stylish : plain;
-    console.log(format(diffStatus));
+    switch (options.format) {
+      case 'stylish':
+        console.log(getDiff(diffStatus, stylish));
+        break;
+      case 'plain':
+        console.log(getDiff(diffStatus, plain));
+        break;
+      // case 'json':
+      //   console.log(getDiff(diffStatus, json));
+      //   break;
+      default: throw new Error('unexpected format');
+    }
   });
 program.parse();

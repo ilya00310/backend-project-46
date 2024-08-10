@@ -5,5 +5,17 @@ import plain from '../formatters/plain.js';
 
 const output = [process.argv[2], process.argv[3]];
 const status = getStatus(output[0], output[1]);
-const format = process.argv[4] === 'stylish' || !process.argv[4] ? stylish : plain;
-console.log(`${format(status)}`);
+if (process.argv[4]) {
+  switch (process.argv[4]) {
+    case 'stylish':
+      console.log(stylish(status));
+      break;
+    case 'plain':
+      console.log(plain(status));
+      break;
+    default:
+      throw new Error('unexpected formate');
+  }
+} else {
+  console.log(stylish(status));
+}
