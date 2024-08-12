@@ -1,5 +1,9 @@
 ### Hexlet tests and linter status:
 
+[![Actions Status](https://github.com/ilya00310/backend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/ilya00310/backend-project-46/actions)
+
+### GitHub Actions:
+
 [![test-and-lint](https://github.com/ilya00310/backend-project-46/actions/workflows/test.yaml/badge.svg)](https://github.com/ilya00310/backend-project-46/actions/workflows/test.yaml)
 
 ## Run Code Climate
