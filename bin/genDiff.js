@@ -9,7 +9,7 @@ const program = new Command();
 const getDiff = (status, foramt) => `${foramt(status)}`;
 
 program
-  .name('gendiff')
+  .name('genDiff')
   .description('Compares two configuration files and shows a difference.')
   .version('0.0.1')
   .argument('<filepath1>')

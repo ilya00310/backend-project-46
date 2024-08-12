@@ -19,6 +19,7 @@ const getValue = (value, newPath, func) => {
   }
   return goTheDepths(value, newPath, func);
 };
+
 export {
   getPath,
   doParseJson,
