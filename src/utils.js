@@ -12,9 +12,9 @@ const getUnion = (one, two) => _.union(one, two);
 const getSortKeys = (obj1, obj2, key) => _.sortBy(getUnion(getKeys(obj1, key), getKeys(obj2, key)));
 const goTheDepths = (objElement, newPath, func) => func(objElement, newPath);
 const getValue = (value, newPath, func) => {
-  if (typeof (value) !== 'object') {
+  if (typeof (value) !== 'object' || value === null) {
     return typeof (value) === 'string' ? `'${value}'` : value;
-  } if (value) {
+  } if (typeof (value) === 'object') {
     return '[complex value]';
   }
   return goTheDepths(value, newPath, func);
