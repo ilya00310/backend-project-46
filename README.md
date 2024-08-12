@@ -33,4 +33,6 @@ https://asciinema.org/a/zC5tKp98pXu5415rA8Hry2kW1
 Package work with new format:
 
 https://asciinema.org/a/mjYj7VXEUxiUjcurqAmWofxll
+
+https://asciinema.org/a/VU7ZXIxhkRyL2Q4bEIDvDtQKl
 ```
