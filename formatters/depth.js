@@ -36,7 +36,7 @@ export default (item, spacesCount = 4) => {
           nextStr += `${' '.repeat(indent + 1)} ${key}: ${getdiffDepth(currentValue, newCount, depth + pointerDeep)}\n`;
       }
       if ((currentIndex === lastIndex && typeof (currentValue) === 'object') || currentIndex === lastIndex) {
-        nextStr += `${' '.repeat(indent)}}`;
+        nextStr += `${' '.repeat(indent - 2)}}`;
       }
       return acc + nextStr;
     }, '');
