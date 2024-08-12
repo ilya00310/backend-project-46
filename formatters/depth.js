@@ -1,5 +1,5 @@
 export default (item, spacesCount = 4) => {
-  const getdiffDepth = (value, subSpacesCount, depth = 1, indentCloseParenthese = 2) => {
+  const getdiffDepth = (value, subSpacesCount, depth = 1) => {
     let pointerDeep = 0;
     let newCount = subSpacesCount;
     if (typeof (value) !== 'object' || value === null) {
@@ -28,7 +28,7 @@ export default (item, spacesCount = 4) => {
           break;
         case 'changed':
           nextStr += `${' '.repeat(indent)}- ${key}: ${getdiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n`;
-          nextStr += `${' '.repeat(indent)}+ ${key}: ${getdiffDepth(currentValue.twoValue, newCount, depth + pointerDeep, 4)}\n`;
+          nextStr += `${' '.repeat(indent)}+ ${key}: ${getdiffDepth(currentValue.twoValue, newCount, depth + pointerDeep)}\n`;
           break;
         case 'unchanged':
           nextStr += `${' '.repeat(indent + 1)} ${key}: ${getdiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n`;
@@ -37,7 +37,7 @@ export default (item, spacesCount = 4) => {
           nextStr += `${' '.repeat(indent + 1)} ${key}: ${getdiffDepth(currentValue, newCount, depth + pointerDeep)}\n`;
       }
       if ((currentIndex === lastIndex && typeof (currentValue) === 'object') || currentIndex === lastIndex) {
-        nextStr += `${' '.repeat(indent - indentCloseParenthese)}}`;
+        nextStr += `${' '.repeat(indent - 2)}}`;
       }
       return acc + nextStr;
     }, '');

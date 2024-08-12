@@ -6,7 +6,7 @@
       - setting3: true
       + setting3: {
             key: value
-      }
+        }
       + setting4: blah blah
       + setting5: {
             key5: value5
