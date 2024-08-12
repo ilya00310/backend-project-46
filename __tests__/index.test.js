@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import getStatus from '../bin/parsAndStatus.js';
+import getStatus from '../src/parsAndStatus.js';
 import stylish from '../formatters/depth.js';
 import plain from '../formatters/plain.js';
 import json from '../formatters/json.js';

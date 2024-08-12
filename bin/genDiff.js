@@ -1,13 +1,8 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import getParseAndStatus from './parsAndStatus.js';
-import stylish from '../formatters/depth.js';
-import plain from '../formatters/plain.js';
-import json from '../formatters/json.js';
+import generalLogic from '../src/general-logic.js';
 
 const program = new Command();
-const getDiff = (status, foramt) => `${foramt(status)}`;
-
 program
   .name('genDiff')
   .description('Compares two configuration files and shows a difference.')
@@ -16,18 +11,6 @@ program
   .argument('<filepath2>')
   .option('-f, --format <type>', 'output format', 'stylish')
   .action((filepath1, filepath2, options) => {
-    const diffStatus = getParseAndStatus(filepath1, filepath2);
-    switch (options.format) {
-      case 'stylish':
-        console.log(getDiff(diffStatus, stylish));
-        break;
-      case 'plain':
-        console.log(getDiff(diffStatus, plain));
-        break;
-      case 'json':
-        console.log(getDiff(diffStatus, json));
-        break;
-      default: throw new Error('unexpected format');
-    }
+    console.log(generalLogic(filepath1, filepath2, options));
   });
 program.parse();

@@ -1,3 +1,3 @@
-import stylish from './formatters/depth.js';
+import generalLogic from './src/general-logic.js';
 
-export default stylish;
+export default generalLogic;
