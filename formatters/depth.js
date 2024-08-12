@@ -1,4 +1,5 @@
 export default (item, spacesCount = 4) => {
+  console.log(item);
   const getdiffDepth = (value, subSpacesCount, depth = 1) => {
     let pointerDeep = 0;
     let newCount = subSpacesCount;
