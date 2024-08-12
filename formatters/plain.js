@@ -1,6 +1,7 @@
 import { getValue } from '../src/utils.js';
 
 export default (item) => {
+  console.log(item);
   const getDiffPlain = (value, depth = '') => {
     let newPath = '';
     if (typeof (value) !== 'object' || value === null) {
