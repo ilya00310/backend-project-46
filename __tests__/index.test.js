@@ -25,23 +25,23 @@ describe('deepFormat', () => {
     });
   });
 
-  describe('only yaml', () => {
+  describe('only yml', () => {
     test('two short path', () => {
-      const status = getStatus('file1.yaml', 'file2.yaml');
+      const status = getStatus('file1.yml', 'file2.yml');
       expect(stylish(status)).toEqual(expectedDeep);
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yaml', '/home/ilya/backend-project-46/file2.yaml');
+      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.yml');
       expect(stylish(status)).toEqual(expectedDeep);
     });
   });
-  describe('json-yaml', () => {
+  describe('json-yml', () => {
     test('two short path', () => {
-      const status = getStatus('file1.yaml', 'file2.yaml');
+      const status = getStatus('file1.yml', 'file2.yml');
       expect(stylish(status)).toEqual(expectedDeep);
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yaml', '/home/ilya/backend-project-46/file2.json');
+      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.json');
       expect(stylish(status)).toEqual(expectedDeep);
     });
   });
@@ -62,23 +62,23 @@ describe('plainFormat', () => {
     });
   });
 
-  describe('only yaml', () => {
+  describe('only yml', () => {
     test('two short path', () => {
-      const status = getStatus('file1.yaml', 'file2.yaml');
+      const status = getStatus('file1.yml', 'file2.yml');
       expect(plain(status)).toEqual(expectedPlain);
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yaml', '/home/ilya/backend-project-46/file2.yaml');
+      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.yml');
       expect(plain(status)).toEqual(expectedPlain);
     });
   });
-  describe('json-yaml', () => {
+  describe('json-yml', () => {
     test('two short path', () => {
-      const status = getStatus('file1.yaml', 'file2.yaml');
+      const status = getStatus('file1.yml', 'file2.yml');
       expect(plain(status)).toEqual(expectedPlain);
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yaml', '/home/ilya/backend-project-46/file2.json');
+      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.json');
       expect(plain(status)).toEqual(expectedPlain);
     });
   });
@@ -99,23 +99,23 @@ describe('jsonFormat', () => {
     });
   });
 
-  describe('only yaml', () => {
+  describe('only yml', () => {
     test('two short path', () => {
-      const status = getStatus('file1.yaml', 'file2.yaml');
+      const status = getStatus('file1.yml', 'file2.yml');
       expect(json(status)).toEqual(JSON.stringify(status, {}, '\t'));
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yaml', '/home/ilya/backend-project-46/file2.yaml');
+      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.yml');
       expect(json(status)).toEqual(JSON.stringify(status, {}, '\t'));
     });
   });
-  describe('json-yaml', () => {
+  describe('json-yml', () => {
     test('two short path', () => {
-      const status = getStatus('file1.yaml', 'file2.yaml');
+      const status = getStatus('file1.yml', 'file2.yml');
       expect(json(status)).toEqual(JSON.stringify(status, {}, '\t'));
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yaml', '/home/ilya/backend-project-46/file2.json');
+      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.json');
       expect(json(status)).toEqual(JSON.stringify(status, {}, '\t'));
     });
   });

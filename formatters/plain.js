@@ -9,7 +9,6 @@ export default (item) => {
       }
       return value;
     }
-
     const entries = Object.entries(value);
 
     return entries.reduce((acc, [key, currentValue], currentIndex) => {

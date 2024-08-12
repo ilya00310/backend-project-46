@@ -12,7 +12,7 @@ export default (path) => {
         return doParseJson(fs.readFileSync(join('__fixtures__', path.split('/').pop()), 'utf8'));
       }
       return doParseJson(fs.readFileSync(getPath(path, 'utf8')));
-    case 'yaml' || 'yml':
+    case 'yml':
       if (isFullPath(path)) {
         return load(fs.readFileSync(join('__fixtures__', path.split('/').pop()), 'utf8'));
       }

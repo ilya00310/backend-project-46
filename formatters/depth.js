@@ -5,7 +5,6 @@ export default (item, spacesCount = 4) => {
     if (typeof (value) !== 'object' || value === null) {
       return value;
     }
-
     const entries = Object.entries(value);
     const lastIndex = entries.length - 1;
     return entries.reduce((acc, [key, currentValue], currentIndex) => {
