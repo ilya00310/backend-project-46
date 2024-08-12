@@ -19,17 +19,14 @@ program
     const diffStatus = getParseAndStatus(filepath1, filepath2);
     switch (options.format) {
       case 'stylish':
-        return (getDiff(diffStatus, plain));
-      // console.log(getDiff(diffStatus, stylish));
-      // break;
+        console.log(getDiff(diffStatus, stylish));
+        break;
       case 'plain':
-        return (getDiff(diffStatus, plain));
-      // console.log(getDiff(diffStatus, plain));
-      // break;
+        console.log(getDiff(diffStatus, plain));
+        break;
       case 'json':
-        return (getDiff(diffStatus, plain));
-      // console.log(getDiff(diffStatus, json));
-      // break;
+        console.log(getDiff(diffStatus, json));
+        break;
       default: throw new Error('unexpected format');
     }
   });
