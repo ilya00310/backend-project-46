@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/bin/bash
 import { Command } from 'commander';
 import generalLogic from '../src/general-logic.js';
 

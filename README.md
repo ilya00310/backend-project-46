@@ -4,7 +4,7 @@
 
 ### GitHub Actions:
 
-[![test-and-lint](https://github.com/ilya00310/backend-project-46/actions/workflows/test.yaml/badge.svg)](https://github.com/ilya00310/backend-project-46/actions/workflows/test.yaml)
+[![test-and-lint](https://github.com/ilya00310/backend-project-46/actions/workflows/test.yml/badge.svg)](https://github.com/ilya00310/backend-project-46/actions/workflows/test.yml)
 
 ## Run Code Climate
 
