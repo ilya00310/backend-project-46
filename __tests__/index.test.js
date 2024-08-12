@@ -10,7 +10,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const getFixturePath = (fileName) => path.join(__dirname, '..', '__fixtures__', fileName);
 const expectedDeep = fs.readFileSync(getFixturePath('deepFormat.txt'), 'utf-8');
 const expectedPlain = fs.readFileSync(getFixturePath('plainFormat.txt'), 'utf-8');
-console.log(expectedDeep);
 describe('deepFormat', () => {
   describe('only json', () => {
     test('two short path', () => {

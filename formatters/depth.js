@@ -27,6 +27,11 @@ export default (item, spacesCount = 4) => {
           break;
         case 'changed':
           nextStr += `${' '.repeat(indent)}- ${key}: ${getdiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n`;
+          if (currentValue.twoValue === null) {
+            nextStr += `${' '.repeat(indent)}+ ${key}: ${getdiffDepth(currentValue.twoValue, newCount, depth + pointerDeep)}`;
+            nextStr += `${' '.repeat(1)}{\n`;
+            break;
+          }
           nextStr += `${' '.repeat(indent)}+ ${key}: ${getdiffDepth(currentValue.twoValue, newCount, depth + pointerDeep)}\n`;
           break;
         case 'unchanged':
@@ -41,5 +46,7 @@ export default (item, spacesCount = 4) => {
       return acc + nextStr;
     }, '');
   };
+  const a = getdiffDepth(item, spacesCount);
+  console.log(a);
   return getdiffDepth(item, spacesCount);
 };
