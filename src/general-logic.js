@@ -5,7 +5,7 @@ import json from '../formatters/json.js';
 
 export default (file1, file2, formater) => {
   const status = getParseAndStatus(file1, file2);
-  if (formater) {
+  if (!formater) {
     switch (formater) {
       case 'stylish':
         return stylish(status);
