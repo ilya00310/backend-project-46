@@ -1,5 +1,4 @@
 export default (item, spacesCount = 4) => {
-  console.log(item);
   const getdiffDepth = (value, subSpacesCount, depth = 1) => {
     let pointerDeep = 0;
     let newCount = subSpacesCount;
@@ -18,6 +17,7 @@ export default (item, spacesCount = 4) => {
         pointerDeep = 1;
         newCount += spacesCount;
       }
+
       const indent = spacesCount * depth - 2;
       switch (currentValue.status) {
         case 'added':
@@ -28,7 +28,11 @@ export default (item, spacesCount = 4) => {
           break;
         case 'changed':
           nextStr += `${' '.repeat(indent)}- ${key}: ${getdiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n`;
-          nextStr += `${' '.repeat(indent)}+ ${key}: ${getdiffDepth(currentValue.twoValue, newCount, depth + pointerDeep)}\n`;
+          if (typeof (currentValue.twoValue) === 'object' && currentValue.twoValue !== null) {
+            nextStr += `${' '.repeat(spacesCount * (depth - 1) - 2)}+ ${key}: ${getdiffDepth(currentValue.twoValue, newCount, depth + pointerDeep)}\n`;
+          } else {
+            nextStr += `${' '.repeat(indent)}+ ${key}: ${getdiffDepth(currentValue.twoValue, newCount, depth + pointerDeep)}\n`;
+          }
           break;
         case 'unchanged':
           nextStr += `${' '.repeat(indent + 1)} ${key}: ${getdiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n`;
@@ -42,7 +46,5 @@ export default (item, spacesCount = 4) => {
       return acc + nextStr;
     }, '');
   };
-  const a = getdiffDepth(item, spacesCount);
-  console.log(a);
   return getdiffDepth(item, spacesCount);
 };
