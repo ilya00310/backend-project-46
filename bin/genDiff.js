@@ -11,6 +11,6 @@ program
   .argument('<filepath2>')
   .option('-f, --format <type>', 'output format', 'stylish')
   .action((filepath1, filepath2, options) => {
-    console.log(generalLogic(filepath1, filepath2, options));
+    console.log(generalLogic(filepath1, filepath2, options.format));
   });
 program.parse();
