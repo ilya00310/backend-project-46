@@ -1,3 +1,5 @@
+import { getValue } from '../src/utils.js';
+
 export default (item) => {
   const getDiffPlain = (value, depth = '') => {
     let newPath = '';
@@ -15,28 +17,17 @@ export default (item) => {
         newPath += `${depth}.${key}`;
       }
       newPath = newPath[0] === '.' ? newPath.slice(1) : newPath;
-
       let nextStr = '';
       switch (currentValue.status) {
         case 'added':
-
-          if (typeof (currentValue.value) === 'object') {
-            nextStr += `Property '${newPath}' was added with value: [complex value]\n`;
-          } else {
-            nextStr += `Property '${newPath}' was added with value: ${getDiffPlain(currentValue.value, newPath)}\n`;
-          }
+          nextStr += `Property '${newPath}' was added with value: ${getValue(currentValue.value, newPath, getDiffPlain)}\n`;
           break;
         case 'deleted':
           nextStr += `Property '${newPath}' was removed\n`;
           break;
         case 'changed':
-          if (typeof (currentValue.value) === 'object') {
-            nextStr += `Property '${newPath}' was updated. From [complex value] `;
-            nextStr += `to ${getDiffPlain(currentValue.newValue, newPath)}\n`;
-          } else {
-            nextStr += `Property '${newPath}' was updated. From ${getDiffPlain(currentValue.value, newPath)} `;
-            nextStr += `to ${getDiffPlain(currentValue.newValue, newPath)}\n`;
-          }
+          nextStr += `Property '${newPath}' was updated. From ${getValue(currentValue.value, newPath, getDiffPlain)} `;
+          nextStr += `to ${getValue(currentValue.twoValue, newPath, getDiffPlain)}\n`;
           break;
         case 'unchanged':
           nextStr += '';

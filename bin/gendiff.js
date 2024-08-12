@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import getParseAndStatus from './parsAndStatus.js';
 import stylish from '../formatters/depth.js';
 import plain from '../formatters/plain.js';
+import json from '../formatters/json.js';
 
 const program = new Command();
 const getDiff = (status, foramt) => `${foramt(status)}`;
@@ -23,9 +24,9 @@ program
       case 'plain':
         console.log(getDiff(diffStatus, plain));
         break;
-      // case 'json':
-      //   console.log(getDiff(diffStatus, json));
-      //   break;
+      case 'json':
+        console.log(getDiff(diffStatus, json));
+        break;
       default: throw new Error('unexpected format');
     }
   });

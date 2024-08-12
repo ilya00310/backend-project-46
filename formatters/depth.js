@@ -28,7 +28,7 @@ export default (item, spacesCount = 4) => {
           break;
         case 'changed':
           nextStr += `${' '.repeat(indent)}- ${key}: ${getdiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n`;
-          nextStr += `${' '.repeat(indent)}+ ${key}: ${getdiffDepth(currentValue.newValue, newCount, depth + pointerDeep)}\n`;
+          nextStr += `${' '.repeat(indent)}+ ${key}: ${getdiffDepth(currentValue.twoValue, newCount, depth + pointerDeep)}\n`;
           break;
         case 'unchanged':
           nextStr += `${' '.repeat(indent + 1)} ${key}: ${getdiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n`;

@@ -9,7 +9,7 @@ export default (sortKeys, fileOne, fileTwo) => {
     } else if (!isKeyinObject(file2, key)) {
       interimObj[key] = { status: 'deleted', value: file1[key] };
     } else if (file1[key] !== file2[key]) {
-      interimObj[key] = { status: 'changed', value: file1[key], newValue: file2[key] };
+      interimObj[key] = { status: 'changed', value: file1[key], twoValue: file2[key] };
     } else if (isKeyinObject(file1, key) && isKeyinObject(file2, key)) {
       interimObj[key] = { status: 'unchanged', value: file1[key] };
     }
