@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { cwd } from 'process';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import getStatus from '../src/parsAndStatus.js';
@@ -7,7 +8,8 @@ import plain from '../formatters/plain.js';
 import json from '../formatters/json.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const getFixturePath = (fileName) => path.join(__dirname, '..', '__fixtures__', fileName);
+// console.log(__dirname, cwd());
+const getFixturePath = (fileName) => path.resolve(__dirname, '..', '__fixtures__', fileName);
 const expectedDeep = fs.readFileSync(getFixturePath('deepFormat.txt'), 'utf-8');
 const expectedPlain = fs.readFileSync(getFixturePath('plainFormat.txt'), 'utf-8');
 describe('deepFormat', () => {
@@ -17,7 +19,7 @@ describe('deepFormat', () => {
       expect(stylish(status)).toEqual(expectedDeep);
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.json', '/home/ilya/backend-project-46/file2.json');
+      const status = getStatus('file1.json', '/__fixtures__/file2.json');
       expect(stylish(status)).toEqual(expectedDeep);
     });
     test('path don\'t exist', () => {
@@ -31,7 +33,7 @@ describe('deepFormat', () => {
       expect(stylish(status)).toEqual(expectedDeep);
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.yml');
+      const status = getStatus('file1.yml', '/__fixtures__/file2.yml');
       expect(stylish(status)).toEqual(expectedDeep);
     });
   });
@@ -41,7 +43,7 @@ describe('deepFormat', () => {
       expect(stylish(status)).toEqual(expectedDeep);
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.json');
+      const status = getStatus('file1.yml', '/__fixtures__/file2.yml');
       expect(stylish(status)).toEqual(expectedDeep);
     });
   });
@@ -54,7 +56,7 @@ describe('plainFormat', () => {
       expect(plain(status)).toEqual(expectedPlain);
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.json', '/home/ilya/backend-project-46/file2.json');
+      const status = getStatus('file1.json', '/__fixtures__/file2.json');
       expect(plain(status)).toEqual(expectedPlain);
     });
     test('path don\'t exist', () => {
@@ -68,7 +70,7 @@ describe('plainFormat', () => {
       expect(plain(status)).toEqual(expectedPlain);
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.yml');
+      const status = getStatus('file1.yml', '/__fixtures__/file2.yml');
       expect(plain(status)).toEqual(expectedPlain);
     });
   });
@@ -78,7 +80,7 @@ describe('plainFormat', () => {
       expect(plain(status)).toEqual(expectedPlain);
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.json');
+      const status = getStatus('file1.yml', '/__fixtures__/file2.json');
       expect(plain(status)).toEqual(expectedPlain);
     });
   });
@@ -91,7 +93,7 @@ describe('jsonFormat', () => {
       expect(json(status)).toEqual(JSON.stringify(status, {}, '\t'));
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.json', '/home/ilya/backend-project-46/file2.json');
+      const status = getStatus('file1.json', '/__fixtures__/file2.json');
       expect(json(status)).toEqual(JSON.stringify(status, {}, '\t'));
     });
     test('path don\'t exist', () => {
@@ -105,7 +107,7 @@ describe('jsonFormat', () => {
       expect(json(status)).toEqual(JSON.stringify(status, {}, '\t'));
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.yml');
+      const status = getStatus('file1.yml', '/__fixtures__/file2.yml');
       expect(json(status)).toEqual(JSON.stringify(status, {}, '\t'));
     });
   });
@@ -115,7 +117,7 @@ describe('jsonFormat', () => {
       expect(json(status)).toEqual(JSON.stringify(status, {}, '\t'));
     });
     test('two deffrent path', () => {
-      const status = getStatus('file1.yml', '/home/ilya/backend-project-46/file2.json');
+      const status = getStatus('file1.yml', '/__fixtures__/file2.json');
       expect(json(status)).toEqual(JSON.stringify(status, {}, '\t'));
     });
   });
