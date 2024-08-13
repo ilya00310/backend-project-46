@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { cwd } from 'process';
 import { join } from 'path';
 import { load } from 'js-yaml';
 import {
@@ -6,6 +7,7 @@ import {
 } from './utils.js';
 
 export default (path) => {
+  console.log(path, cwd());
   switch (getExtension(path)) {
     case 'json':
       if (isFullPath(path)) {

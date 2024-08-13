@@ -7,7 +7,6 @@ import plain from '../formatters/plain.js';
 import json from '../formatters/json.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// console.log(__dirname, cwd());
 const getFixturePath = (fileName) => path.resolve(__dirname, '..', '__fixtures__', fileName);
 const expectedDeep = fs.readFileSync(getFixturePath('deepFormat.txt'), 'utf-8');
 const expectedPlain = fs.readFileSync(getFixturePath('plainFormat.txt'), 'utf-8');
