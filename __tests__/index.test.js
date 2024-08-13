@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { cwd } from 'process';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import getStatus from '../src/parsAndStatus.js';
