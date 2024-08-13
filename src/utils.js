@@ -38,6 +38,20 @@ const getNewObj = (key, status, frstFile, scndFile = undefined, func = undefined
   return { [key]: { status: `${status}`, value: frstFile[key], twoValue: scndFile[key] } };
 };
 
+const isNextDeep = (vale) => {
+  if (((typeof (vale) === 'object' && !vale.status) || typeof (vale.value) === 'object' || typeof (vale.twoValue) === 'object')) {
+    return true;
+  }
+  return false;
+};
+const getOpenParen = (index) => (index === 0 ? `${' '.repeat(0)}{\n` : '');
+const getCloseParen = (index, lastIndex, indent, value) => {
+  if ((index === lastIndex && typeof (value) === 'object') || index === lastIndex) {
+    return `${' '.repeat(indent - 2)}}`;
+  }
+  return '';
+};
+
 export {
   getPath,
   doParseJson,
@@ -49,4 +63,7 @@ export {
   getValue,
   addPath,
   getNewObj,
+  isNextDeep,
+  getOpenParen,
+  getCloseParen,
 };
