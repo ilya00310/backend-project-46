@@ -1,8 +1,7 @@
-import { getValue } from '../src/utils.js';
+import { getValue, addPath } from '../src/utils.js';
 
 export default (item) => {
-  const getDiffPlain = (value, depth = '') => {
-    let newPath = '';
+  const getDiffPlain = (value, path = '') => {
     if (typeof (value) !== 'object' || value === null) {
       if (typeof (value) === 'string') {
         return `'${value}'`;
@@ -10,36 +9,22 @@ export default (item) => {
       return value;
     }
     const entries = Object.entries(value);
-
-    return entries.reduce((acc, [key, currentValue], currentIndex) => {
-      if (((typeof (currentValue) === 'object') || typeof (currentValue.value) === 'object')) {
-        newPath += `${depth}.${key}`;
-      }
-      newPath = newPath[0] === '.' ? newPath.slice(1) : newPath;
-      let nextStr = '';
+    return entries.reduce((acc, [key, currentValue]) => {
+      const newPath = addPath(currentValue, path, key);
       switch (currentValue.status) {
         case 'added':
-          nextStr += `Property '${newPath}' was added with value: ${getValue(currentValue.value, newPath, getDiffPlain)}\n`;
-          break;
+          return `${acc}Property '${newPath}' was added with value: ${getValue(currentValue.value, newPath, getDiffPlain)}\n`;
         case 'deleted':
-          nextStr += `Property '${newPath}' was removed\n`;
-          break;
+          return `${acc}Property '${newPath}' was removed\n`;
         case 'changed':
-          nextStr += `Property '${newPath}' was updated. From ${getValue(currentValue.value, newPath, getDiffPlain)} `;
-          nextStr += `to ${getValue(currentValue.twoValue, newPath, getDiffPlain)}\n`;
-          break;
+          return `${acc}Property '${newPath}' was updated. From ${getValue(currentValue.value, newPath, getDiffPlain)} `
+            + `to ${getValue(currentValue.twoValue, newPath, getDiffPlain)}\n`;
         case 'unchanged':
-          nextStr += '';
-          break;
+          return `${acc}`;
         default:
-          nextStr += `${getDiffPlain(currentValue, newPath)}`;
+          return `${acc}${getDiffPlain(currentValue, newPath)}`;
       }
-      if (typeof (currentIndex.value) !== 'object') {
-        newPath = '';
-      }
-      return acc + nextStr;
     }, '');
   };
-  const diffPlain = getDiffPlain(item);
-  return diffPlain.slice(0, diffPlain.length - 1);
+  return getDiffPlain(item).trim();
 };

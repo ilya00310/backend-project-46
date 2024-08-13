@@ -5,7 +5,7 @@ import _ from 'lodash';
 const getPath = (filename) => resolve(cwd(), '__fixtures__', filename);
 const doParseJson = (file) => JSON.parse(file);
 const isFullPath = (path) => path.includes('/');
-const getExtension = (path) => path.split('.').pop();
+const getExtension = (path) => path.substring(path.lastIndexOf('.') + 1, path.length);
 const isKeyinObject = (object, key) => Object.hasOwn(object, key);
 const getKeys = (file, key) => Object.keys(file[key]);
 const getUnion = (one, two) => _.union(one, two);
@@ -19,6 +19,15 @@ const getValue = (value, newPath, func) => {
   }
   return goTheDepths(value, newPath, func);
 };
+const addPath = (value, path, key) => {
+  if (path.length === 0) {
+    return `${path}${key}`;
+  }
+  if (((typeof (value) === 'object') || typeof (value.value) === 'object')) {
+    return `${path}.${key}`;
+  }
+  return '';
+};
 
 export {
   getPath,
@@ -29,4 +38,5 @@ export {
   getSortKeys,
   goTheDepths,
   getValue,
+  addPath,
 };
