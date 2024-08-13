@@ -28,6 +28,15 @@ const addPath = (value, path, key) => {
   }
   return '';
 };
+const getNewObj = (key, status, frstFile, scndFile = undefined, func = undefined) => {
+  if (scndFile === undefined) {
+    return { [key]: { status: `${status}`, value: frstFile[key] } };
+  }
+  if (typeof (frstFile[key]) === 'object' && typeof (scndFile[key]) === 'object') {
+    return { [key]: func(getSortKeys(frstFile, scndFile, key), frstFile[key], scndFile[key]) };
+  }
+  return { [key]: { status: `${status}`, value: frstFile[key], twoValue: scndFile[key] } };
+};
 
 export {
   getPath,
@@ -39,4 +48,5 @@ export {
   goTheDepths,
   getValue,
   addPath,
+  getNewObj,
 };
