@@ -1,6 +1,19 @@
-import { isNextDeep, getOpenParen, getCloseParen } from '../src/utils.js';
+/* eslint-disable import/prefer-default-export */
+const isNextDeep = (vale) => {
+  if (((typeof (vale) === 'object' && !vale.status) || typeof (vale.value) === 'object' || typeof (vale.twoValue) === 'object')) {
+    return true;
+  }
+  return false;
+};
+const getOpenParen = (index) => (index === 0 ? `${' '.repeat(0)}{\n` : '');
+const getCloseParen = (index, lastIndex, indent, value) => {
+  if ((index === lastIndex && typeof (value) === 'object') || index === lastIndex) {
+    return `${' '.repeat(indent - 2)}}`;
+  }
+  return '';
+};
 
-export default (item, spacesCount = 4) => {
+export const stylish = (item, spacesCount = 4) => {
   const getdiffDepth = (value, subSpacesCount, depth = 1) => {
     if (typeof (value) !== 'object' || value === null) {
       return value;

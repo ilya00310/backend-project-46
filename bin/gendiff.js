@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
-import generalLogic from '../src/general-logic.js';
+import { generalLogic } from '../index.js';
 
 const program = new Command();
 program

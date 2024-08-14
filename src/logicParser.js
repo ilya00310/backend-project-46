@@ -1,11 +1,14 @@
+/* eslint-disable import/prefer-default-export */
+import { cwd } from 'node:process';
 import fs from 'fs';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { load } from 'js-yaml';
-import {
-  getPath, doParseJson, isFullPath, getExtension,
-} from './utils.js';
 
-export default (path) => {
+const getPath = (filename) => resolve(cwd(), '__fixtures__', filename);
+const doParseJson = (file) => JSON.parse(file);
+const isFullPath = (path) => path.includes('/');
+const getExtension = (path) => path.substring(path.lastIndexOf('.') + 1, path.length);
+export const getParse = (path) => {
   switch (getExtension(path)) {
     case 'json':
       if (isFullPath(path)) {

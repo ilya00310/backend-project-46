@@ -1,6 +1,23 @@
-import { getValue, addPath } from '../src/utils.js';
-
-export default (item) => {
+/* eslint-disable import/prefer-default-export */
+const goTheDepths = (objElement, newPath, func) => func(objElement, newPath);
+const getValue = (value, newPath, func) => {
+  if (typeof (value) !== 'object' || value === null) {
+    return typeof (value) === 'string' ? `'${value}'` : value;
+  } if (typeof (value) === 'object') {
+    return '[complex value]';
+  }
+  return goTheDepths(value, newPath, func);
+};
+const addPath = (value, path, key) => {
+  if (path.length === 0) {
+    return `${path}${key}`;
+  }
+  if (((typeof (value) === 'object') || typeof (value.value) === 'object')) {
+    return `${path}.${key}`;
+  }
+  return '';
+};
+export const plain = (item) => {
   const getDiffPlain = (value, path = '') => {
     if (typeof (value) !== 'object' || value === null) {
       if (typeof (value) === 'string') {
