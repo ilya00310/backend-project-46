@@ -14,7 +14,7 @@ test.each([
   [getGeneralLogic('file1.json', 'file2.json'), getGeneralLogic('file1.yml', 'file2.yml'), expectedDeep],
   [getGeneralLogic('file1.json', 'file2.json', 'plain'), getGeneralLogic('file1.yml', 'file2.yml', 'plain'), expectedPlain],
   [parse(getGeneralLogic('file1.json', 'file2.json', 'json')), parse(getGeneralLogic('file1.yml', 'file2.yml', 'json')), parse(expectedJson)],
-])('test different format ', (oneLogic, twoLogic, expected) => {
+])('.add(%i, %i) ', (oneLogic, twoLogic, expected) => {
   expect(oneLogic).toEqual(expected);
   expect(twoLogic).toEqual(expected);
 });
