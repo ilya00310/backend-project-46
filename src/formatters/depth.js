@@ -14,7 +14,7 @@ const getCloseParen = (index, lastIndex, indent, value) => {
 };
 
 export const stylish = (item, spacesCount = 4) => {
-  const getdiffDepth = (value, subSpacesCount, depth = 1) => {
+  const getDiffDepth = (value, subSpacesCount, depth = 1) => {
     if (typeof (value) !== 'object' || value === null) {
       return value;
     }
@@ -28,18 +28,18 @@ export const stylish = (item, spacesCount = 4) => {
       const closeParen = getCloseParen(currentIndex, lastIndex, indent, currentValue);
       switch (currentValue.status) {
         case 'added':
-          return `${acc}${openParen}${' '.repeat(indent)}+ ${key}: ${getdiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n${closeParen}`;
+          return `${acc}${openParen}${' '.repeat(indent)}+ ${key}: ${getDiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n${closeParen}`;
         case 'deleted':
-          return `${acc}${openParen}${' '.repeat(indent)}- ${key}: ${getdiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n${closeParen}`;
+          return `${acc}${openParen}${' '.repeat(indent)}- ${key}: ${getDiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n${closeParen}`;
         case 'changed':
-          return `${acc}${openParen}${' '.repeat(indent)}- ${key}: ${getdiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n`
-            + `${' '.repeat(indent)}+ ${key}: ${getdiffDepth(currentValue.twoValue, newCount, depth + pointerDeep)}\n${closeParen}`;
+          return `${acc}${openParen}${' '.repeat(indent)}- ${key}: ${getDiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n`
+            + `${' '.repeat(indent)}+ ${key}: ${getDiffDepth(currentValue.twoValue, newCount, depth + pointerDeep)}\n${closeParen}`;
         case 'unchanged':
-          return `${acc}${openParen}${' '.repeat(indent + 1)} ${key}: ${getdiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n${closeParen}`;
+          return `${acc}${openParen}${' '.repeat(indent + 1)} ${key}: ${getDiffDepth(currentValue.value, newCount, depth + pointerDeep)}\n${closeParen}`;
         default:
-          return `${acc}${openParen}${' '.repeat(indent + 1)} ${key}: ${getdiffDepth(currentValue, newCount, depth + pointerDeep)}\n${closeParen}`;
+          return `${acc}${openParen}${' '.repeat(indent + 1)} ${key}: ${getDiffDepth(currentValue, newCount, depth + pointerDeep)}\n${closeParen}`;
       }
     }, '');
   };
-  return getdiffDepth(item, spacesCount);
+  return getDiffDepth(item, spacesCount);
 };

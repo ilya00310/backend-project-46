@@ -4,10 +4,10 @@ import { stylish } from './formatters/depth.js';
 import { plain } from './formatters/plain.js';
 import { json } from './formatters/json.js';
 
-export const getGeneralLogic = (file1, file2, formater) => {
+export const getGeneralLogic = (file1, file2, formatter) => {
   const status = getParseAndStatus(file1, file2);
-  if (formater) {
-    switch (formater) {
+  if (formatter) {
+    switch (formatter) {
       case 'stylish':
         return stylish(status);
       case 'plain':

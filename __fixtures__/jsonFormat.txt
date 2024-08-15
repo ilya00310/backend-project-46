@@ -1,0 +1,88 @@
+    {
+        "common": {
+                "follow": {
+                        "status": "added",
+                        "value": false
+                },
+                "setting1": {
+                        "status": "unchanged",
+                        "value": "Value 1"
+                },
+                "setting2": {
+                        "status": "deleted",
+                        "value": 200
+                },
+                "setting3": {
+                        "status": "changed",
+                        "value": true,
+                        "twoValue": {
+                                "key": "value"
+                        }
+                },
+                "setting4": {
+                        "status": "added",
+                        "value": "blah blah"
+                },
+                "setting5": {
+                        "status": "added",
+                        "value": {
+                                "key5": "value5"
+                        }
+                },
+                "setting6": {
+                        "doge": {
+                                "wow": {
+                                        "status": "changed",
+                                        "value": "",
+                                        "twoValue": "so much"
+                                }
+                        },
+                        "key": {
+                                "status": "unchanged",
+                                "value": "value"
+                        },
+                        "ops": {
+                                "status": "added",
+                                "value": "valueOps"
+                        }
+                }
+        },
+        "group1": {
+                "baz": {
+                        "status": "changed",
+                        "value": "bas",
+                        "twoValue": "bars"
+                },
+                "foo": {
+                        "status": "unchanged",
+                        "value": "bar"
+                },
+                "nest": {
+                        "status": "changed",
+                        "value": {
+                                "key": "value"
+                        },
+                        "twoValue": "str"
+                }
+        },
+        "group2": {
+                "status": "deleted",
+                "value": {
+                        "abc": 12345,
+                        "deep": {
+                                "id": 45
+                        }
+                }
+        },
+        "group3": {
+                "status": "added",
+                "value": {
+                        "deep": {
+                                "id": {
+                                        "number": 45
+                                }
+                        },
+                        "fee": 100500
+                }
+        }
+    }

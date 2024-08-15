@@ -11,7 +11,7 @@
     },
     "setting6": {
       "key": "value",
-      "ops": "vops",
+      "ops": "valueOps",
       "doge": {
         "wow": "so much"
       }
