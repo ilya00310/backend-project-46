@@ -9,12 +9,12 @@ const readFile = (file) => fs.readFileSync(getFixturePath(file), 'utf-8');
 const expectedDeep = readFile('stylishFormat.txt');
 const expectedPlain = readFile('plainFormat.txt');
 const expectedJson = readFile('jsonFormat.txt');
-const parse = (file) => JSON.parse(file);
+const fixture = '/__fixtures__/';
 test.each([
-  [getGeneralLogic('file1.json', 'file2.json'), getGeneralLogic('file1.yml', 'file2.yml'), expectedDeep],
-  [getGeneralLogic('file1.json', 'file2.json', 'plain'), getGeneralLogic('file1.yml', 'file2.yml', 'plain'), expectedPlain],
-  [parse(getGeneralLogic('file1.json', 'file2.json', 'json')), parse(getGeneralLogic('file1.yml', 'file2.yml', 'json')), parse(expectedJson)],
-])('.add(%i, %i)', (oneLogic, twoLogic, expected) => {
-  expect(oneLogic).toEqual(expected);
-  expect(twoLogic).toEqual(expected);
+  [[`${fixture}file1.json`, `${fixture}file2.json`], [`${fixture}file1.yml`, `${fixture}file2.yml`], expectedDeep],
+  [[`${fixture}file1.json`, `${fixture}file2.json`, 'plain'], [`${fixture}file1.yml`, `${fixture}file2.yml`, 'plain'], expectedPlain],
+  [[`${fixture}file1.json`, `${fixture}file2.json`, 'json'], [`${fixture}file1.yml`, `${fixture}file2.yml`, 'json'], expectedJson],
+])('.comparison(%s %s)', (oneLogic, twoLogic, expected) => {
+  expect(getGeneralLogic(...oneLogic)).toEqual(expected);
+  expect(getGeneralLogic(...twoLogic)).toEqual(expected);
 });

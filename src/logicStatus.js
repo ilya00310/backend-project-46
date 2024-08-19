@@ -14,7 +14,10 @@ const getNewObj = (key, status, oneFile, twoFile = undefined, func = undefined) 
   }
   return { [key]: { status: `${status}`, value: oneFile[key], twoValue: twoFile[key] } };
 };
-export const getStatus = (sortKeys, fileOne, fileTwo) => {
+export const getStatus = (fileOne, fileTwo) => {
+  const keyOneFile = Object.keys(fileOne);
+  const keyTwoFile = Object.keys(fileTwo);
+  const sortKeys = _.sortBy(_.union(keyOneFile, keyTwoFile));
   const getStatusDiff = (keys, file1, file2) => keys.reduce((acc, key) => {
     if (!isKeyInObject(file1, key)) {
       return { ...acc, ...getNewObj(key, 'added', file2) };
