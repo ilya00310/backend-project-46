@@ -7,11 +7,12 @@ import { load } from 'js-yaml';
 const getPath = (filename) => resolve(cwd(), `./${filename}`);
 const doParseJson = (file) => JSON.parse(file);
 export const getParse = (path) => {
-  const extension = extname(path);
-  switch (true) {
-    case extension === '.json':
+  switch (extname(path)) {
+    case '.json':
       return doParseJson(fs.readFileSync(getPath(path, 'utf8')));
-    case extension === '.yml' || extension === '.yaml':
+    case '.yml':
+      return load(fs.readFileSync(getPath(path, 'utf8')));
+    case '.yaml':
       return load(fs.readFileSync(getPath(path, 'utf8')));
     default:
       throw new Error('extension don\'t provide');
