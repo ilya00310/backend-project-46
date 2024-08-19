@@ -6,16 +6,22 @@ import { load } from 'js-yaml';
 
 const getPath = (filename) => resolve(cwd(), `./${filename}`);
 const doParseJson = (file) => JSON.parse(file);
+const isFullPath = (path) => path.includes('/');
 export const getParse = (path) => {
-  switch (extname(path)) {
-    case '.json':
+  const condition = extname(path);
+  switch (true) {
+    case condition === '.json':
+      if (isFullPath(path)) {
+        return doParseJson(fs.readFileSync(path));
+      }
       return doParseJson(fs.readFileSync(getPath(path, 'utf8')));
-    case '.yml':
-      console.log('cwd = ', cwd(), 'ouput =', path);
-      return load(fs.readFileSync(getPath(path, 'utf8')));
-    case '.yaml':
+    case condition === '.yml' || condition === 'yaml':
+      if (isFullPath(path)) {
+        return doParseJson(fs.readFileSync(path));
+      }
       return load(fs.readFileSync(getPath(path, 'utf8')));
     default:
       throw new Error('extension don\'t provide');
   }
 };
+console.log();
