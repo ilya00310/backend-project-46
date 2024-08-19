@@ -11,6 +11,7 @@ export const getParse = (path) => {
     case '.json':
       return doParseJson(fs.readFileSync(getPath(path, 'utf8')));
     case '.yml':
+      console.log('cwd = ', cwd(), 'ouput =', path);
       return load(fs.readFileSync(getPath(path, 'utf8')));
     case '.yaml':
       return load(fs.readFileSync(getPath(path, 'utf8')));
