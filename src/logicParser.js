@@ -1,14 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import { cwd } from 'node:process';
 import fs from 'fs';
-import { resolve, extname, join } from 'path';
+import { resolve, extname } from 'path';
 import { load } from 'js-yaml';
 
 const getPath = (filename) => resolve(cwd(), `./${filename}`);
 const doParseJson = (file) => JSON.parse(file);
 const isFullPath = (path) => path.includes('/');
 export const getParse = (path) => {
-  console.log('cwd =', cwd(), 'path =', path);
   const condition = extname(path);
   switch (true) {
     case condition === '.json':
