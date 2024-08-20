@@ -15,7 +15,6 @@ test.each([
   [[fullPath('file1.json'), fullPath('file2.json'), 'plain'], [fullPath('file1.yml'), fullPath('file2.yml'), 'plain'], expectedPlain],
   [[fullPath('file1.json'), fullPath('file2.json'), 'json'], [fullPath('file1.yml'), fullPath('file2.yml'), 'json'], expectedJson],
 ])('.comparison(%s %s)', (oneLogic, twoLogic, expected) => {
-  console.log(getGeneralLogic(...oneLogic));
   expect(getGeneralLogic(...oneLogic)).toEqual(expected);
   expect(getGeneralLogic(...twoLogic)).toEqual(expected);
 });
