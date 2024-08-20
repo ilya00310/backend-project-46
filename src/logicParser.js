@@ -1,10 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 import { cwd } from 'node:process';
 import fs from 'fs';
-import { resolve, extname } from 'path';
+import { resolve, extname, join } from 'path';
 import { load } from 'js-yaml';
 
 const getPath = (filename) => resolve(cwd(), `./${filename}`);
+// const getPathFull = (fileName) => resolve(cwd(), `..${fileName}`);
 const doParseJson = (file) => JSON.parse(file);
 const isFullPath = (path) => path.includes('/');
 export const getParse = (path) => {
@@ -14,6 +15,7 @@ export const getParse = (path) => {
       if (isFullPath(path)) {
         return doParseJson(fs.readFileSync(path));
       }
+
       return doParseJson(fs.readFileSync(getPath(path, 'utf8')));
     case condition === '.yml' || condition === 'yaml':
       if (isFullPath(path)) {
@@ -24,4 +26,3 @@ export const getParse = (path) => {
       throw new Error('extension don\'t provide');
   }
 };
-console.log();
