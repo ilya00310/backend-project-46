@@ -2,31 +2,31 @@
 import _ from 'lodash';
 
 const isKeyInObject = (object, key) => Object.hasOwn(object, key);
-const getKeys = (file, key) => Object.keys(file[key]);
-const getUnion = (one, two) => _.union(one, two);
-const getSortKeys = (obj1, obj2, key) => _.sortBy(getUnion(getKeys(obj1, key), getKeys(obj2, key)));
-const getNewObj = (key, status, oneFile, twoFile = undefined, func = undefined) => {
-  if (twoFile === undefined) {
-    return { [key]: { status: `${status}`, value: oneFile[key] } };
-  }
-  if (typeof (oneFile[key]) === 'object' && typeof (twoFile[key]) === 'object') {
-    return { [key]: func(getSortKeys(oneFile, twoFile, key), oneFile[key], twoFile[key]) };
-  }
-  return { [key]: { status: `${status}`, value: oneFile[key], twoValue: twoFile[key] } };
-};
+const isHaveSubData = (data, key) => _.isObject(data[key]);
 export const getStatus = (fileOne, fileTwo) => {
-  const keyOneFile = Object.keys(fileOne);
-  const keyTwoFile = Object.keys(fileTwo);
-  const sortKeys = _.sortBy(_.union(keyOneFile, keyTwoFile));
-  const getStatusDiff = (keys, file1, file2) => keys.reduce((acc, key) => {
-    if (!isKeyInObject(file1, key)) {
-      return { ...acc, ...getNewObj(key, 'added', file2) };
-    } if (!isKeyInObject(file2, key)) {
-      return { ...acc, ...getNewObj(key, 'deleted', file1) };
-    } if (file1[key] !== file2[key]) {
-      return { ...acc, ...getNewObj(key, 'changed', file1, file2, getStatusDiff) };
+  const sortKeys = _.sortBy(_.union(Object.keys(fileOne), Object.keys(fileTwo)));
+  return sortKeys.reduce((acc, key) => {
+    if (!isKeyInObject(fileOne, key) && isHaveSubData(fileTwo, key)) {
+      return { ...acc, [key]: { status: 'recursion', value: fileTwo[key] } };
+    } if (!isKeyInObject(fileOne, key)) {
+      return { ...acc, [key]: { status: 'added', value: fileTwo[key] } };
+    } if (!isKeyInObject(fileTwo, key) && isHaveSubData(fileOne, key)) {
+      return { ...acc, [key]: { status: 'recursion', value: fileOne[key] } };
+    } if (!isKeyInObject(fileTwo, key)) {
+      return { ...acc, [key]: { status: 'deleted', value: fileOne[key] } };
     }
-    return { ...acc, ...getNewObj(key, 'unchanged', file1) };
+    if (fileOne[key] === fileTwo[key]) {
+      return { ...acc, [key]: { status: 'unchanged', value: fileOne[key] } };
+    }
+    if (!_.isEqual(fileOne[key], fileTwo[key])) {
+      if (isHaveSubData(fileOne, key) && isHaveSubData(fileTwo, key)) {
+        return { ...acc, status: 'recursion', [key]: getStatus(fileOne[key], fileTwo[key]) };
+      }
+      if (isHaveSubData(fileOne, key) || isHaveSubData(fileTwo, key)) {
+        return { ...acc, [key]: { status: 'recursion', value: fileOne[key], twoValue: fileTwo[key] } };
+      }
+      return { ...acc, [key]: { status: 'changed', value: fileOne[key], twoValue: fileTwo[key] } };
+    }
   }, {});
-  return getStatusDiff(sortKeys, fileOne, fileTwo);
 };
+
