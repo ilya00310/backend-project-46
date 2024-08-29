@@ -9,6 +9,7 @@ const readFile = (file) => fs.readFileSync(getFixturePath(file), 'utf-8');
 const expectedDeep = readFile('stylishFormat.txt');
 const expectedPlain = readFile('plainFormat.txt');
 const expectedJson = readFile('jsonFormat.txt');
+console.log(expectedJson);
 const fullPath = (fileName) => `/home/ilya//backend-project-46/__fixtures__/${fileName}`;
 test.each([
   [['file1.json', 'file2.json'], ['file1.yml', 'file2.yml'], expectedDeep],

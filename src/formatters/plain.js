@@ -12,13 +12,14 @@ const addPath = (value, path, key) => {
   if (path.length === 0) {
     return `${path}${key}`;
   }
-  if (((typeof (value) === 'object') || typeof (value.value) === 'object')) {
+  if (value.status === 'recursion ') {
     return `${path}.${key}`;
   }
   return '';
 };
 export const plain = (item) => {
   const getDiffPlain = (value, path = '') => Object.entries(value).reduce((acc, [key, currentValue]) => {
+    console.log(key, currentValue)
     const newPath = addPath(currentValue, path, key);
     switch (currentValue.status) {
       case 'added':
@@ -27,7 +28,7 @@ export const plain = (item) => {
         return `${acc}Property '${newPath}' was removed\n`;
       case 'changed':
         return `${acc}Property '${newPath}' was updated. From ${getValue(currentValue.value, newPath)} `
-          + `to ${getValue(currentValue.twoValue, newPath)}\n`;
+          + `to ${getValue(currentValue.newValue, newPath)}\n`;
       case 'unchanged':
         return `${acc}`;
       default:
