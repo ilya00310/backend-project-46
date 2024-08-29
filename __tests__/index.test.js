@@ -9,15 +9,8 @@ const readFile = (file) => fs.readFileSync(getFixturePath(file), 'utf-8');
 const expectedDeep = readFile('stylishFormat.txt');
 const expectedPlain = readFile('plainFormat.txt');
 const expectedJson = readFile('jsonFormat.txt');
-console.log(expectedJson);
-const fullPath = (fileName) => `/home/ilya//backend-project-46/__fixtures__/${fileName}`;
-test.each([
-  [['file1.json', 'file2.json'], ['file1.yml', 'file2.yml'], expectedDeep],
-  [['file1.json', 'file2.json', 'plain'], ['file1.yml', 'file2.yml', 'plain'], expectedPlain],
-  [['file1.json', 'file2.json', 'json'], ['file1.yml', 'file2.yml', 'json'], expectedJson],
-])('.comparison(%s %s)', (oneLogic, twoLogic, expected) => {
-  const onePath = [fullPath(oneLogic[0]), fullPath(oneLogic[1])];
-  const twoPath = [fullPath(twoLogic[0]), fullPath(twoLogic[1])];
-  expect(getGeneralLogic(onePath[0], onePath[1], oneLogic[2])).toEqual(expected);
-  expect(getGeneralLogic(twoPath[0], twoPath[1], twoLogic[2])).toEqual(expected);
+test.each(['json', 'yml'])('.comparison(%s)', (extensions) => {
+  expect(getGeneralLogic(getFixturePath(`file1.${extensions}`), getFixturePath(`file2.${extensions}`))).toEqual(expectedDeep);
+  expect(getGeneralLogic(getFixturePath(`file1.${extensions}`), getFixturePath(`file2.${extensions}`), 'plain')).toEqual(expectedPlain);
+  expect(getGeneralLogic(getFixturePath(`file1.${extensions}`), getFixturePath(`file2.${extensions}`), 'json')).toEqual(expectedJson);
 });
