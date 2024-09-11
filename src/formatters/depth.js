@@ -1,37 +1,50 @@
+import _ from 'lodash';
+
 /* eslint-disable import/prefer-default-export */
-const getOpenParen = (index) => (index === 0 ? `${' '.repeat(0)}{\n` : '');
-const getCloseParen = (index, lastIndex, indent, value) => {
-  if ((index === lastIndex && typeof (value) === 'object') || index === lastIndex) {
-    return `${' '.repeat(indent - 2)}}`;
-  }
-  return '';
-};
-export const stylish = (item, spacesCount = 4) => {
-  const getDiffDepth = (value, subSpacesCount, depth = 1) => {
-    if (typeof (value) !== 'object' || value === null) {
-      return value;
+const getIndentWithParen = (depth, value, index = undefined, lastIndex = undefined) => {
+  const indent = 4 * depth - 2;
+  if (lastIndex !== undefined) {
+    if (index === lastIndex) {
+      return `${' '.repeat(indent - 2)}}`;
     }
+    return '';
+  }
+  if (value.status === 'recursion' || value.status === 'unchanged' || !value.status) {
+    return index === 0 ? `{\n${' '.repeat(indent + 1)}` : ' '.repeat(indent + 1);
+  }
+  return index === 0 ? `{\n${' '.repeat(indent)}` : ' '.repeat(indent);
+};
+const doStringify = (value, depth) => {
+  if (!_.isObject(value)) {
+    return String(value);
+  }
+  const lastIndex = Object.entries(value).length - 1;
+  const keys = Object.keys(value);
+  const solution = keys.map((currentKey, index) => `${getIndentWithParen(depth, value, index)} ${currentKey}: ${doStringify(value[currentKey], depth + 1)}\n${getIndentWithParen(depth, value, index, lastIndex)}`).join('');
+  return solution;
+};
+const getStrByStatus = (acc, depth, value, symbol = '', index = undefined, lastIndex = undefined) => `${acc}${getIndentWithParen(depth, value, index)}${symbol} ${value.key}: ${doStringify(value.value, depth + 1)}\n${getIndentWithParen(depth, value, index, lastIndex)}`;
+
+export const stylish = (item) => {
+  const getDiffDepth = (value, depth = 1) => {
     const lastIndex = Object.entries(value).length - 1;
-    return Object.entries(value).reduce((acc, [key, currentValue], currentIndex) => {
-      const indent = spacesCount * depth - 2;
-      const openParen = getOpenParen(currentIndex);
-      const closeParen = getCloseParen(currentIndex, lastIndex, indent, currentValue);
+    return Object.values(value).reduce((acc, currentValue, currentIndex) => {
       switch (currentValue.status) {
         case 'added':
-          return `${acc}${openParen}${' '.repeat(indent)}+ ${currentValue.key}: ${getDiffDepth(currentValue.value, subSpacesCount, depth + 1)}\n${closeParen}`;
+          return getStrByStatus(acc, depth, currentValue, '+', currentIndex, lastIndex);
         case 'deleted':
-          return `${acc}${openParen}${' '.repeat(indent)}- ${currentValue.key}: ${getDiffDepth(currentValue.value, subSpacesCount, depth + 1)}\n${closeParen}`;
+          return getStrByStatus(acc, depth, currentValue, '-', currentIndex, lastIndex);
         case 'changed':
-          return `${acc}${openParen}${' '.repeat(indent)}- ${currentValue.key}: ${getDiffDepth(currentValue.value, subSpacesCount, depth + 1)}\n`
-            + `${' '.repeat(indent)}+ ${currentValue.key}: ${getDiffDepth(currentValue.newValue, subSpacesCount, depth + 1)}\n${closeParen}`;
+          return `${acc}${getIndentWithParen(depth, currentValue, currentIndex)}- ${currentValue.key}: ${doStringify(currentValue.value, depth + 1)}\n`
+            + `${getIndentWithParen(depth, currentValue)}+ ${currentValue.key}: ${doStringify(currentValue.newValue, depth + 1)}\n${getIndentWithParen(depth, currentValue, currentIndex, lastIndex)}`;
         case 'unchanged':
-          return `${acc}${openParen}${' '.repeat(indent + 1)} ${currentValue.key}: ${getDiffDepth(currentValue.value, subSpacesCount, depth)}\n${closeParen}`;
+          return getStrByStatus(acc, depth, currentValue, '', currentIndex, lastIndex);
         case 'recursion':
-          return `${acc}${openParen}${' '.repeat(indent + 1)} ${currentValue.key}: ${getDiffDepth(currentValue.value, subSpacesCount + spacesCount, depth + 1)}\n${closeParen}`;
+          return `${acc}${getIndentWithParen(depth, currentValue, currentIndex)} ${currentValue.key}: ${getDiffDepth(currentValue.value, depth + 1)}\n${getIndentWithParen(depth, currentValue, currentIndex, lastIndex)}`;
         default:
-          return `${acc}${openParen}${' '.repeat(indent + 1)} ${key}: ${getDiffDepth(currentValue, subSpacesCount + spacesCount, depth + 1)}\n${closeParen}`;
+          throw new Error('Unexpected status');
       }
     }, '');
   };
-  return getDiffDepth(item, spacesCount);
+  return getDiffDepth(item);
 };

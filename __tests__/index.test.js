@@ -10,7 +10,9 @@ const expectedDeep = readFile('stylishFormat.txt');
 const expectedPlain = readFile('plainFormat.txt');
 const expectedJson = readFile('jsonFormat.txt');
 test.each(['json', 'yml'])('.comparison(%s)', (extensions) => {
-  expect(getGeneralLogic(getFixturePath(`file1.${extensions}`), getFixturePath(`file2.${extensions}`))).toEqual(expectedDeep);
-  expect(getGeneralLogic(getFixturePath(`file1.${extensions}`), getFixturePath(`file2.${extensions}`), 'plain')).toEqual(expectedPlain);
-  expect(getGeneralLogic(getFixturePath(`file1.${extensions}`), getFixturePath(`file2.${extensions}`), 'json')).toEqual(expectedJson);
+  const pathOne = getFixturePath(`file1.${extensions}`);
+  const pathTwo = getFixturePath(`file2.${extensions}`);
+  expect(getGeneralLogic(pathOne, pathTwo)).toEqual(expectedDeep);
+  expect(getGeneralLogic(pathOne, pathTwo, 'plain')).toEqual(expectedPlain);
+  expect(getGeneralLogic(pathOne, pathTwo, 'json')).toEqual(expectedJson);
 });
