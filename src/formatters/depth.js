@@ -7,21 +7,21 @@ const doStringify = (value, depth, funcForRecursion = undefined, spacesCount = 4
   if (!_.isObject(value)) {
     return String(value);
   }
-  const keys = Object.keys(value);
-  const solution = keys.reduce((acc, currentKey) => {
-    const valueAndKey = { value: value[currentKey], key: currentKey };
-    return funcForRecursion(acc, depth, valueAndKey);
-  }, '');
-  return `{\n${solution}${getIndent(depth - 1, spacesCount)}  }`;
+  const entries = Object.entries(value);
+  const solution = entries.map(([currentKey, currentValue]) => {
+    const valueAndKey = { value: currentValue, key: currentKey };
+    return funcForRecursion('', depth + 1, valueAndKey);
+  }).join('');
+  return `{\n${solution}${getIndent(depth, spacesCount)}  }`;
 };
-const getStrByUnchanged = (acc, depth, value) => `${acc}${getIndent(depth)}  ${value.key}: ${doStringify(value.value, depth + 1, getStrByUnchanged)}\n`;
-const getStrByAdded = (acc, depth, value) => `${acc}${getIndent(depth)}+ ${value.key}: ${doStringify(value.value, depth + 1, getStrByUnchanged)}\n`;
-const getStrByDeleted = (acc, depth, value) => `${acc}${getIndent(depth)}- ${value.key}: ${doStringify(value.value, depth + 1, getStrByUnchanged)}\n`;
-const getStrByChanged = (acc, depth, value) => `${acc}${getIndent(depth)}- ${value.key}: ${doStringify(value.value, depth + 1, getStrByUnchanged)}\n`
-  + `${getIndent(depth)}+ ${value.key}: ${doStringify(value.newValue, depth + 1, getStrByUnchanged)}\n`;
+const getStrByUnchanged = (acc, depth, value) => `${acc}${getIndent(depth)}  ${value.key}: ${doStringify(value.value, depth, getStrByUnchanged)}\n`;
+const getStrByAdded = (acc, depth, value) => `${acc}${getIndent(depth)}+ ${value.key}: ${doStringify(value.value, depth, getStrByUnchanged)}\n`;
+const getStrByDeleted = (acc, depth, value) => `${acc}${getIndent(depth)}- ${value.key}: ${doStringify(value.value, depth, getStrByUnchanged)}\n`;
+const getStrByChanged = (acc, depth, value) => `${acc}${getIndent(depth)}- ${value.key}: ${doStringify(value.value, depth, getStrByUnchanged)}\n`
+  + `${getIndent(depth)}+ ${value.key}: ${doStringify(value.newValue, depth, getStrByUnchanged)}\n`;
 
 export const stylish = (item) => {
-  const getDiffDepth = (value, depth = 1) => Object.values(value).reduce((acc, currentValue) => {
+  const getDiffDepth = (value, depth = 1) => value.reduce((acc, currentValue) => {
     switch (currentValue.status) {
       case 'added':
         return getStrByAdded(acc, depth, currentValue);

@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import { stylish } from './formatters/depth.js';
-import { plain } from './formatters/plain.js';
+import { stylish } from './depth.js';
+import { plain } from './plain.js';
 
 export const choiceFormat = (format, status) => {
   switch (format) {

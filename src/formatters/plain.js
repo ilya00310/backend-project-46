@@ -1,28 +1,35 @@
 /* eslint-disable import/prefer-default-export */
+import _ from 'lodash';
+
 const getValue = (value) => {
-  if (typeof (value) !== 'object' || value === null) {
-    return typeof (value) === 'string' ? `'${value}'` : value;
+  if (_.isObject(value) && value !== null) {
+    return '[complex value]';
   }
-  return '[complex value]';
+  if (typeof (value) === 'string') {
+    return `'${value}'`;
+  }
+  return value;
 };
 
 export const plain = (item) => {
-  const getDiffPlain = (value, path = '') => Object.entries(value).reduce((acc, [key, currentValue]) => {
+  const getDiffPlain = (value, path = '') => Object.entries(value).map(([key, currentValue]) => {
     const correctKey = currentValue.key || key;
     const arrPath = path.length === 0 ? [correctKey] : [path, correctKey];
     switch (currentValue.status) {
       case 'added':
-        return `${acc}Property '${arrPath.join('.')}' was added with value: ${getValue(currentValue.value)}\n`;
+        return `Property '${arrPath.join('.')}' was added with value: ${getValue(currentValue.value)}\n`;
       case 'deleted':
-        return `${acc}Property '${arrPath.join('.')}' was removed\n`;
+        return `Property '${arrPath.join('.')}' was removed\n`;
       case 'changed':
-        return `${acc}Property '${arrPath.join('.')}' was updated. From ${getValue(currentValue.value)} `
+        return `Property '${arrPath.join('.')}' was updated. From ${getValue(currentValue.value)} `
           + `to ${getValue(currentValue.newValue)}\n`;
       case 'unchanged':
-        return `${acc}`;
+        return '';
+      case 'recursion':
+        return `${getDiffPlain(currentValue.value, arrPath.join('.'))}`;
       default:
-        return `${acc}${getDiffPlain(currentValue.value, arrPath.join('.'))}`;
+        throw new Error('Unexpected status');
     }
-  }, '');
+  }).join('');
   return getDiffPlain(item, '').trim();
 };
