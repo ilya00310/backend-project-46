@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { stylish } from './depth.js';
+import { stylish } from './stylish.js';
 import { plain } from './plain.js';
 
 export const choiceFormat = (format, status) => {

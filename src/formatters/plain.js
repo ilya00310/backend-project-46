@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import _ from 'lodash';
 
-const getValue = (value) => {
+const getStrValue = (value) => {
   if (_.isObject(value) && value !== null) {
     return '[complex value]';
   }
@@ -10,26 +10,24 @@ const getValue = (value) => {
   }
   return value;
 };
-
+const getActualPath = (path, key) => [...path, key].join('.');
 export const plain = (item) => {
-  const getDiffPlain = (value, path = '') => Object.entries(value).map(([key, currentValue]) => {
-    const correctKey = currentValue.key || key;
-    const arrPath = path.length === 0 ? [correctKey] : [path, correctKey];
+  const iter = (value, path = []) => value.map((currentValue) => {
     switch (currentValue.status) {
       case 'added':
-        return `Property '${arrPath.join('.')}' was added with value: ${getValue(currentValue.value)}\n`;
+        return `Property '${getActualPath(path, currentValue.key)}' was added with value: ${getStrValue(currentValue.value)}\n`;
       case 'deleted':
-        return `Property '${arrPath.join('.')}' was removed\n`;
+        return `Property '${getActualPath(path, currentValue.key)}' was removed\n`;
       case 'changed':
-        return `Property '${arrPath.join('.')}' was updated. From ${getValue(currentValue.value)} `
-          + `to ${getValue(currentValue.newValue)}\n`;
+        return `Property '${getActualPath(path, currentValue.key)}' was updated. From ${getStrValue(currentValue.value)} `
+          + `to ${getStrValue(currentValue.newValue)}\n`;
       case 'unchanged':
         return '';
       case 'recursion':
-        return `${getDiffPlain(currentValue.value, arrPath.join('.'))}`;
+        return `${iter(currentValue.value, [...path, currentValue.key])}`;
       default:
         throw new Error('Unexpected status');
     }
   }).join('');
-  return getDiffPlain(item, '').trim();
+  return iter(item).trim();
 };

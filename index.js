@@ -1,3 +1,3 @@
-import { getGeneralLogic } from './src/general-logic.js';
+import { getGeneralLogic } from './src/index.js';
 
 export default getGeneralLogic;
