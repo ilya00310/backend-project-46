@@ -2,7 +2,7 @@
 import _ from 'lodash';
 
 const getStrValue = (value) => {
-  if (_.isObject(value) && value !== null) {
+  if (_.isObject(value)) {
     return '[complex value]';
   }
   if (typeof (value) === 'string') {

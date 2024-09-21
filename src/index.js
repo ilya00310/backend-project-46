@@ -8,7 +8,7 @@ import { getDiff } from './logicDiff.js';
 
 const getPath = (filename) => resolve(cwd(), `${filename}`);
 const readFile = (path) => fs.readFileSync(getPath(path));
-const getTypeData = (path) => (extname(path).slice(1) === 'yaml' ? 'yml' : extname(path).slice(1));
+const getTypeData = (path) => extname(path).slice(1);
 export const getGeneralLogic = (path1, path2, formatter = 'stylish') => {
   const typeOneFile = getTypeData((path1));
   const typeTwoFile = getTypeData((path2));
